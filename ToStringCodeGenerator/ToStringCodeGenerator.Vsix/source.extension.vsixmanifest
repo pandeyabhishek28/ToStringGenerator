@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="ToStringAnalyzer.fb4570ec-ec5d-445f-aa11-81781b030e43" Version="1.0" Language="en-US" Publisher="Abhishek Pandey"/>
+        <Identity Id="fb4570ec-ec5d-445f-aa11-81781b030e43" Version="1.0" Language="en-US" Publisher="Abhishek Pandey"/>
         <DisplayName>ToStringGenerator</DisplayName>
         <Description xml:space="preserve">A simple ToString generator to generate tostring method for types.</Description>
         <License>license.txt</License>

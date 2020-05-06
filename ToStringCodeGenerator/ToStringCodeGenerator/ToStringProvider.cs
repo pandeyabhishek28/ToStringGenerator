@@ -34,38 +34,53 @@ namespace ToStringAnalyzer
             var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
 
             // TODO: Replace the following code with your own analysis, generating a CodeAction for each fix to suggest
-            var diagnostic = context.Diagnostics.First();
-            var diagnosticSpan = diagnostic.Location.SourceSpan;
+            if (context.Diagnostics.Any())
+            {
+                var diagnostic = context.Diagnostics.FirstOrDefault();
 
-            // Find the type declaration identified by the diagnostic.
-            var declaration = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<TypeDeclarationSyntax>().First();
+                var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-            // Register a code action that will invoke the fix.
+                // Find the type declaration identified by the diagnostic.
+                var declaration = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<TypeDeclarationSyntax>().FirstOrDefault();
 
-            var action = CodeAction.Create(
-                    title: title,
-                    // createChangedSolution: c => GenerateToString(context.Document, declaration, c),
-                    createChangedDocument: c => GenerateToString(context.Document, declaration, c),
-                    equivalenceKey: title);
+                if (declaration != null)
+                {
+                    if (declaration is ClassDeclarationSyntax ||
+                        declaration is StructDeclarationSyntax)
+                    {
+                        // Register a code action that will invoke the fix.
 
-            context.RegisterCodeFix(action, diagnostic);
+                        var action = CodeAction.Create(
+                            title: title,
+                            // createChangedSolution: c => GenerateToString(context.Document, declaration, c),
+                            createChangedDocument: c => GenerateToString(context.Document, declaration, c),
+                            equivalenceKey: title);
+
+                        context.RegisterCodeFix(action, diagnostic);
+                    }
+                }
+            }
         }
 
         private async Task<Document> GenerateToString(Document document, TypeDeclarationSyntax typeDecl, CancellationToken cancellationToken)
         {
-            // Get the symbol representing the type to be renamed.
-            var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
-            var typeSymbol = semanticModel.GetDeclaredSymbol(typeDecl, cancellationToken);
+            if (typeDecl is ClassDeclarationSyntax || typeDecl is StructDeclarationSyntax)
+            {
+                // Get the symbol representing the type to be renamed.
+                var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
 
-            var newClassDec = typeDecl.AddMembers(GetToStringDeclarationSyntax(typeDecl, semanticModel));
+                var newClassDec = typeDecl.AddMembers(GetToStringDeclarationSyntax(typeDecl, semanticModel));
 
-            var sr = await document.GetSyntaxRootAsync(cancellationToken);
+                var sr = await document.GetSyntaxRootAsync(cancellationToken);
 
-            var nsr = sr.ReplaceNode(typeDecl, newClassDec);
+                var nsr = sr.ReplaceNode(typeDecl, newClassDec);
 
-            var newDocument = document.WithSyntaxRoot(nsr);
+                var newDocument = document.WithSyntaxRoot(nsr);
 
-            return newDocument;
+                return newDocument;
+            }
+            else
+                return document;
         }
 
 
@@ -100,13 +115,17 @@ namespace ToStringAnalyzer
 
         public static IEnumerable<PropertyInfo> FindAllProperties(INamedTypeSymbol symbol)
         {
-            var props = symbol.GetMembers().Where(p => p.Kind == SymbolKind.Property &&
-            p.DeclaredAccessibility == Accessibility.Public).OfType<IPropertySymbol>();
-            foreach (var item in props)
-            {
-                yield return new PropertyInfo(item.Name, item.Type.IsValueType);
-            }
+            var typeProps = symbol.GetMembers().Where(p => p.Kind == SymbolKind.Property &&
+              p.DeclaredAccessibility == Accessibility.Public);
 
+            if (typeProps.Any())
+            {
+                var props = typeProps.OfType<IPropertySymbol>();
+                foreach (var item in props)
+                {
+                    yield return new PropertyInfo(item.Name, item.Type.IsValueType);
+                }
+            }
             if (!string.Equals(symbol.BaseType?.Name, "object", StringComparison.OrdinalIgnoreCase))
             {
                 foreach (var item in FindAllProperties(symbol.BaseType))
@@ -115,5 +134,6 @@ namespace ToStringAnalyzer
                 }
             }
         }
+
     }
 }

@@ -15,8 +15,8 @@
     <ProjectGuid>{0E549F22-97CA-47F7-BEE6-7F027D21BA03}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ToStringAnalyzerWithCodeFix.Vsix</RootNamespace>
-    <AssemblyName>ToStringAnalyzerWithCodeFix</AssemblyName>
+    <RootNamespace>ToStringGenerator.Vsix</RootNamespace>
+    <AssemblyName>ToStringGenerator</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <GeneratePkgDefFile>false</GeneratePkgDefFile>
     <IncludeAssemblyInVSIXContainer>false</IncludeAssemblyInVSIXContainer>

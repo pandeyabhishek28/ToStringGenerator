@@ -9,7 +9,6 @@ namespace ToStringAnalyzer
     {
         public const string DiagnosticId = "ToStringGenerator";
 
-
         private static readonly LocalizableString Title = new LocalizableResourceString(
             nameof(Resources.AnalyzerTitle), Resources.ResourceManager, typeof(Resources));
 
@@ -25,7 +24,8 @@ namespace ToStringAnalyzer
             MessageFormat, Category, DiagnosticSeverity.Warning, isEnabledByDefault: true,
             description: Description);
 
-        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(Rule); } }
+        public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics
+        { get { return ImmutableArray.Create(Rule); } }
 
         public override void Initialize(AnalysisContext context)
         {
@@ -34,18 +34,24 @@ namespace ToStringAnalyzer
 
         private static void AnalyzeSymbol(SymbolAnalysisContext context)
         {
-            // TODO: Replace the following code with your own analysis, generating Diagnostic objects for any issues you find
+            //// TODO: Replace the following code with your own analysis, generating Diagnostic objects for any issues you find
             var namedTypeSymbol = (INamedTypeSymbol)context.Symbol;
 
-            var toString = namedTypeSymbol.GetMembers(ToStringMethod);
-            // Find just those named type symbols with names containing lowercase letters.
-            if (toString == null || toString.Length == 0)
+            if (namedTypeSymbol.TypeKind == TypeKind.Class
+                || namedTypeSymbol.TypeKind == TypeKind.Struct)
             {
-                // For all such symbols, produce a diagnostic.
-                var diagnostic = Diagnostic.Create(Rule, namedTypeSymbol.Locations[0],
-                    namedTypeSymbol.Name);
+                var toString = namedTypeSymbol.GetMembers(ToStringMethod);
 
-                context.ReportDiagnostic(diagnostic);
+
+                // Find just those named type symbols with names containing lowercase letters.
+                if (toString == null || toString.Length == 0)
+                {
+                    // For all such symbols, produce a diagnostic.
+                    var diagnostic = Diagnostic.Create(Rule, namedTypeSymbol.Locations[0],
+                      namedTypeSymbol.Name);
+
+                    context.ReportDiagnostic(diagnostic);
+                }
             }
         }
     }

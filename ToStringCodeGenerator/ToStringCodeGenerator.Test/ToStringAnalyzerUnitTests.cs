@@ -32,16 +32,16 @@ namespace ToStringAnalyzer.Test
     using System.Threading.Tasks;
     using System.Diagnostics;
 
-    namespace ConsoleApplication1
+    namespace ConsoleApplication
     {
-        class TypeName
+        class program
         {   
         }
     }";
             var expected = new DiagnosticResult
             {
-                Id = "ToStringAnalyzerWithCodeFix",
-                Message = String.Format("Type name '{0}' contains lowercase letters", "TypeName"),
+                Id = "ToStringAnalyzer",
+                Message = String.Format("Type name '{0}' does not contains ToString", "program"),
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[] {
@@ -59,10 +59,14 @@ namespace ToStringAnalyzer.Test
     using System.Threading.Tasks;
     using System.Diagnostics;
 
-    namespace ConsoleApplication1
+    namespace ConsoleApplication
     {
-        class TYPENAME
-        {   
+        class program
+        {  
+                public override string ToString()
+                {
+                      return @" + "program" + @";
+                }
         }
     }";
             VerifyCSharpFix(test, fixtest);
