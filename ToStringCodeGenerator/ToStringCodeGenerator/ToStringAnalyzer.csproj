@@ -12,13 +12,13 @@
     <Authors>abhishek Pandey</Authors>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl></PackageProjectUrl>
-    <PackageIconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</PackageIconUrl>
-    <RepositoryUrl></RepositoryUrl>
+    <PackageIcon>ap.jpg</PackageIcon>
+    <RepositoryUrl>https://github.com/pandeyabhishek28/ToStringGenerator</RepositoryUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Description>
       **To String Generator **
-      
-      
+
+
       It will help you out by generating the ToString() method for you.
 
       The several options that we get by using Ctrl+. there will be "Generate ToString()".
@@ -28,7 +28,7 @@
       The generated ToString() method will include all the public properties of that type.
     </Description>
     <PackageReleaseNotes>
-      Updating type checks and fixing a null excetion.
+      Updating libs and dependencies.
     </PackageReleaseNotes>
     <Copyright>Copyright</Copyright>
     <PackageTags>ToStringGenerator, ToString, CodeGenerator</PackageTags>
@@ -37,6 +37,10 @@
     <PackageLicenseFile>license.txt</PackageLicenseFile>
     <Version>1.2.0</Version>
   </PropertyGroup>
+
+  <ItemGroup>
+       <None Include="images\ap.jpg" Pack="true" PackagePath="\"/>
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />
