@@ -12,3 +12,9 @@ Please be aware that if the type is already having the ToString method then it w
 
 The generated ToString() method will include all the public properties of that type.
 
+
+Packages available at:-
+
+https://www.nuget.org/packages/ToStringGenerator/
+https://marketplace.visualstudio.com/items?itemName=pandeyabhishek28.ToStringGenerator
+
