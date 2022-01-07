@@ -1,38 +1,46 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard1.3</TargetFramework>
+    <TargetFramework>netstandard2.0</TargetFramework>
     <IncludeBuildOutput>false</IncludeBuildOutput>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup>
     <PackageId>ToStringGenerator</PackageId>
-    <PackageVersion>1.0.0.0</PackageVersion>
+    <PackageVersion>1.2.0.0</PackageVersion>
     <Authors>abhishek Pandey</Authors>
     <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageIconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</PackageIconUrl>
     <RepositoryUrl></RepositoryUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
-    <Description>**To String Generator **
+    <Description>
+      **To String Generator **
+      
+      
+      It will help you out by generating the ToString() method for you.
 
-It will help you out by generating the ToString() method for you.
+      The several options that we get by using Ctrl+. there will be "Generate ToString()".
 
-Enable the code analyzer specifically tostringanalyzer first it will analyze and then it will generate the ToString method.
+      Please be aware that if the type is already having the ToString method then it will not provide any suggestions.
 
-The generated ToString method will include all the public properties of that type.</Description>
-    <PackageReleaseNotes>Summary of changes made in this release of the package.</PackageReleaseNotes>
+      The generated ToString() method will include all the public properties of that type.
+    </Description>
+    <PackageReleaseNotes>
+      Updating type checks and fixing a null excetion.
+    </PackageReleaseNotes>
     <Copyright>Copyright</Copyright>
     <PackageTags>ToStringGenerator, ToString, CodeGenerator</PackageTags>
     <NoPackageAnalysis>true</NoPackageAnalysis>
     <Company>abhishek Pandey</Company>
     <PackageLicenseFile>license.txt</PackageLicenseFile>
+    <Version>1.2.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="2.6.2" PrivateAssets="all" />
-    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="2.10" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.3" PrivateAssets="all" />
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.1" PrivateAssets="all" />
     <PackageReference Update="NETStandard.Library" PrivateAssets="all" />
   </ItemGroup>
 
