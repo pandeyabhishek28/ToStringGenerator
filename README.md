@@ -16,5 +16,6 @@ The generated ToString() method will include all the public properties of that t
 Packages available at:-
 
 https://www.nuget.org/packages/ToStringGenerator/
+
 https://marketplace.visualstudio.com/items?itemName=pandeyabhishek28.ToStringGenerator
 
